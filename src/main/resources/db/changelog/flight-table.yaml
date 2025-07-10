@@ -1,0 +1,90 @@
+databaseChangeLog:
+  - changeSet:
+      id: 5
+      author: umit
+      changes:
+        - createTable:
+            tableName: flight
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: flight_number
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: airline_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: aircraft_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: origin_station_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: destination_station_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: scheduled_departure
+                  type: DATETIME
+                  constraints:
+                    nullable: false
+              - column:
+                  name: scheduled_arrival
+                  type: DATETIME
+                  constraints:
+                    nullable: false
+              - column:
+                  name: flight_type_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+
+        - addForeignKeyConstraint:
+            baseTableName: flight
+            baseColumnNames: airline_id
+            referencedTableName: airline
+            referencedColumnNames: id
+            constraintName: fk_flight_airline
+
+        - addForeignKeyConstraint:
+            baseTableName: flight
+            baseColumnNames: aircraft_id
+            referencedTableName: aircraft
+            referencedColumnNames: id
+            constraintName: fk_flight_aircraft
+
+        - addForeignKeyConstraint:
+            baseTableName: flight
+            baseColumnNames: origin_station_id
+            referencedTableName: station
+            referencedColumnNames: id
+            constraintName: fk_flight_origin_station
+
+        - addForeignKeyConstraint:
+            baseTableName: flight
+            baseColumnNames: destination_station_id
+            referencedTableName: station
+            referencedColumnNames: id
+            constraintName: fk_flight_destination_station
+
+        - addForeignKeyConstraint:
+            baseTableName: flight
+            baseColumnNames: flight_type_id
+            referencedTableName: flight_type
+            referencedColumnNames: id
+            constraintName: fk_flight_type

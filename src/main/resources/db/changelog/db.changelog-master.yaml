@@ -1,0 +1,15 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/airline-table.yaml
+  - include:
+      file: db/changelog/station-table.yaml
+  - include:
+      file: db/changelog/aircraft-table.yaml
+  - include:
+      file: db/changelog/flighttype-table.yaml
+  - include:
+      file: db/changelog/flight-table.yaml
+  - include:
+      file: db/changelog/route-table.yaml
+  - include:
+      file: db/changelog/user-table.yaml
