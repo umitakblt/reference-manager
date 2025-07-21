@@ -2,6 +2,8 @@ package com.umitakbulut.reference_manager.dto.request;
 
 import lombok.*;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Getter
@@ -9,7 +11,10 @@ import java.time.LocalDateTime;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class FlightRequestDTO {
+public class FlightRequestDTO implements Serializable {
+    @Serial
+    private static final long serialVersionUID = -6383580496428756157L;
+
     private String flightNumber;
     private Long airlineId;
     private Long aircraftId;

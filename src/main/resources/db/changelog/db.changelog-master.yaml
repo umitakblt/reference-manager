@@ -13,3 +13,5 @@ databaseChangeLog:
       file: db/changelog/route-table.yaml
   - include:
       file: db/changelog/user-table.yaml
+  - include:
+      file: db/changelog/role-table.yaml

@@ -11,11 +11,7 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface UserMapper {
 
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "password", ignore = true)
     User toEntity(RegisterRequestDTO request);
-
     UserResponseDTO toDto(User user);
 
-    List<UserResponseDTO> toDtoList(List<User> users);
 }

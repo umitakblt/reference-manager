@@ -22,6 +22,7 @@ public class FlightServiceImpl implements FlightService {
     private final AirlineRepository airlineRepository;
     private final StationRepository stationRepository;
     private final FlightTypeRepository flightTypeRepository;
+    private final FlightKafkaProducer flightKafkaProducer;
 
     @Override
     public FlightResponseDTO addFlight(FlightRequestDTO requestDTO) {
@@ -64,38 +65,38 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public FlightResponseDTO updateFlight(Long id, FlightRequestDTO requestDTO) {
+    public FlightResponseDTO updateFlight(Long id, FlightRequestDTO flightRequestDTO) {
         Flight existing = flightRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Flight not found with id: " + id));
 
-        // Temel alanları güncelle
-        existing.setFlightNumber(requestDTO.getFlightNumber());
-        existing.setScheduledDeparture(requestDTO.getScheduledDeparture());
-        existing.setScheduledArrival(requestDTO.getScheduledArrival());
+        existing.setFlightNumber(flightRequestDTO.getFlightNumber());
+        existing.setScheduledDeparture(flightRequestDTO.getScheduledDeparture());
+        existing.setScheduledArrival(flightRequestDTO.getScheduledArrival());
 
-        // İlişkisel entityleri güncelle
-        Aircraft aircraft = aircraftRepository.findById(requestDTO.getAircraftId())
-                .orElseThrow(() -> new ResourceNotFoundException("Aircraft not found with id: " + requestDTO.getAircraftId()));
+        Aircraft aircraft = aircraftRepository.findById(flightRequestDTO.getAircraftId())
+                .orElseThrow(() -> new ResourceNotFoundException("Aircraft not found with id: " + flightRequestDTO.getAircraftId()));
         existing.setAircraft(aircraft);
 
-        Airline airline = airlineRepository.findById(requestDTO.getAirlineId())
-                .orElseThrow(() -> new ResourceNotFoundException("Airline not found with id: " + requestDTO.getAirlineId()));
+        Airline airline = airlineRepository.findById(flightRequestDTO.getAirlineId())
+                .orElseThrow(() -> new ResourceNotFoundException("Airline not found with id: " + flightRequestDTO.getAirlineId()));
         existing.setAirline(airline);
 
-        Station origin = stationRepository.findById(requestDTO.getOriginStationId())
-                .orElseThrow(() -> new ResourceNotFoundException("Origin Station not found with id: " + requestDTO.getOriginStationId()));
+        Station origin = stationRepository.findById(flightRequestDTO.getOriginStationId())
+                .orElseThrow(() -> new ResourceNotFoundException("Origin Station not found with id: " + flightRequestDTO.getOriginStationId()));
         existing.setOriginStation(origin);
 
-        Station destination = stationRepository.findById(requestDTO.getDestinationStationId())
-                .orElseThrow(() -> new ResourceNotFoundException("Destination Station not found with id: " + requestDTO.getDestinationStationId()));
+        Station destination = stationRepository.findById(flightRequestDTO.getDestinationStationId())
+                .orElseThrow(() -> new ResourceNotFoundException("Destination Station not found with id: " + flightRequestDTO.getDestinationStationId()));
         existing.setDestinationStation(destination);
 
-        FlightType flightType = flightTypeRepository.findById(requestDTO.getFlightTypeId())
-                .orElseThrow(() -> new ResourceNotFoundException("Flight Type not found with id: " + requestDTO.getFlightTypeId()));
+        FlightType flightType = flightTypeRepository.findById(flightRequestDTO.getFlightTypeId())
+                .orElseThrow(() -> new ResourceNotFoundException("Flight Type not found with id: " + flightRequestDTO.getFlightTypeId()));
         existing.setFlightType(flightType);
 
         Flight saved = flightRepository.save(existing);
+
         return flightMapper.toDto(saved);
+
     }
 
     @Override

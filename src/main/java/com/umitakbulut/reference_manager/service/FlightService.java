@@ -7,13 +7,13 @@ import java.util.List;
 
 public interface FlightService {
 
-    FlightResponseDTO addFlight(FlightRequestDTO requestDTO);
+    FlightResponseDTO addFlight(FlightRequestDTO flightRequestDTO);
 
     FlightResponseDTO getFlightById(Long id);
 
     List<FlightResponseDTO> getAllFlights();
 
-    FlightResponseDTO updateFlight(Long id, FlightRequestDTO requestDTO);
+    FlightResponseDTO updateFlight(Long id, FlightRequestDTO flightRequestDTO);
 
     void deleteFlight(Long id);
 }

@@ -3,6 +3,8 @@ package com.umitakbulut.reference_manager.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
@@ -12,7 +14,10 @@ import java.time.LocalDateTime;
 @ToString(exclude = {"airline", "aircraft", "originStation", "destinationStation", "flightType"})
 @NoArgsConstructor
 @AllArgsConstructor
-public class Flight {
+public class Flight implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = -6360679211095651595L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
