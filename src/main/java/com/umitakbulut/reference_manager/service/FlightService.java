@@ -2,6 +2,7 @@ package com.umitakbulut.reference_manager.service;
 
 import com.umitakbulut.reference_manager.dto.request.FlightRequestDTO;
 import com.umitakbulut.reference_manager.dto.response.FlightResponseDTO;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
